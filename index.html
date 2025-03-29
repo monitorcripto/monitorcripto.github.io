@@ -1,140 +1,591 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="pt-BR">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="Portfolio Page Exemplo">
-    <meta name="author" content="Dimitri Teixeira">
-    <link rel="icon" type="image/png" href="assets/imgs/thumb.png">
-    <title>Suporte de TI</title>
-    <!-- font icons -->
-    <link rel="stylesheet" href="assets/vendors/themify-icons/css/themify-icons.css">
-    <!-- Bootstrap + Steller main styles -->
-    <link rel="stylesheet" href="assets/css/steller.css">
-
-</head>
-
-<!-- Inicio Blipdesk -->
-<script src="https://unpkg.com/blip-chat-widget" type="text/javascript"></script>
-<script>
-    (function () {
-        window.onload = function () {
-            new BlipChat()
-                .withAppKey('aGlsYXJpbzM6NDRiOTUwNmQtMTg0ZS00NDUyLWI0NTMtYmUwOGEwMTFlMTJl')
-                .withButton({"color":"#2a5192","icon":""})
-                .withCustomCommonUrl('https://hugo_hilario88-4ebe2.chat.blip.ai/')
-                .build();
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suporte Técnico - Windows Style</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            height: 100vh;
+            overflow: auto;
         }
-    })();
-</script>
-            
-            
-            
-            
-<!-- fim blipdesk -->
 
-<body data-spy="scroll" data-target=".navbar" data-offset="40" id="home">
+        #vanta-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
 
-    <!-- Page navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top" data-spy="affix" data-offset-top="0">
-        <div class="container">
-            <a class="navbar-brand" href="#"><img src="assets/imgs/logow.svg" alt=""></a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+        .taskbar {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            height: 40px;
+            background: rgba(0, 48, 135, 0.7);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.3);
+            box-sizing: border-box;
+            z-index: 1000;
+        }
 
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ml-auto align-items-center">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#home">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#about">Sobre</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#service">Pagamento</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#testmonial">Depoimentos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#contact">Sou Help Desk</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="- btn btn-primary rounded ml-4"
-                            href="https://wa.me/5531984681716?text=Ol%C3%A1%2C+peguei+seu+contato+no+v%C3%ADdeo+que+ensina+a+fazer+site+de+portfolio%21"
-                            target="_blank">Ajuda</a>
-                    </li>
-                </ul>
+        .start-btn {
+            background: rgba(0, 85, 212, 0.8);
+            color: white;
+            padding: 5px 15px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            border-radius: 3px;
+            font-size: 14px;
+            transition: background 0.2s ease;
+        }
+
+        .start-btn:hover {
+            background: rgba(0, 120, 255, 0.9);
+        }
+
+        .chat-btn {
+            background: rgba(0, 85, 212, 0.8);
+            padding: 5px 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            margin-left: 10px;
+            transition: background 0.2s ease;
+        }
+
+        .chat-btn img {
+            width: 20px;
+            height: 20px;
+            margin-right: 5px;
+        }
+
+        .chat-btn span {
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .chat-btn:hover {
+            background: rgba(0, 120, 255, 0.9);
+        }
+
+        .taskbar-right {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            color: white;
+            max-width: 60%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .date {
+            margin-right: 10px;
+            font-size: 12px;
+        }
+
+        .clock {
+            font-size: 12px;
+        }
+
+        .start-menu {
+            position: fixed;
+            bottom: 40px;
+            left: 0;
+            width: 250px;
+            max-width: 90%;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 5px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            display: none;
+            padding: 10px;
+            z-index: 1000;
+        }
+
+        .start-menu ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .start-menu li {
+            padding: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            transition: background 0.2s ease;
+            color: #fff;
+        }
+
+        .start-menu li:hover {
+            background: rgba(208, 228, 255, 0.4);
+        }
+
+        .start-menu li img {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+        }
+
+        .window {
+            position: absolute;
+            width: 500px;
+            max-width: 90%;
+            height: auto;
+            min-height: 300px;
+            background: #fff;
+            border: 1px solid #999;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            top: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            display: none;
+            box-sizing: border-box;
+            z-index: 1000;
+        }
+
+        .window-titlebar {
+            background: linear-gradient(to right, #0055d4, #0078ff);
+            color: white;
+            padding: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: move;
+            user-select: none;
+        }
+
+        .window-title {
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .window-controls button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            padding: 0 10px;
+        }
+
+        .window-controls .close-btn:hover {
+            background: #ff0000;
+        }
+
+        .window-content {
+            padding: 15px;
+        }
+
+        .window-content h2 {
+            margin-top: 0;
+            color: #003087;
+            font-size: 18px;
+        }
+
+        .window-content p {
+            line-height: 1.5;
+            font-size: 14px;
+        }
+
+        .window-content button {
+            background: #0055d4;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            cursor: pointer;
+            border-radius: 3px;
+            font-size: 14px;
+        }
+
+        .window-content button:hover {
+            background: #0078ff;
+        }
+
+        /* Estilo dos ícones na área de trabalho */
+        .desktop-icon {
+            position: absolute;
+            top: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            color: #fff;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+            z-index: 10;
+        }
+
+        .desktop-icon.new-tab {
+            left: 10px;
+        }
+
+        .desktop-icon.remote-access {
+            left: 80px;
+        }
+
+        .desktop-icon img {
+            width: 40px;
+            height: 40px;
+            margin-bottom: 5px;
+        }
+
+        .desktop-icon span {
+            font-size: 12px;
+            text-align: center;
+        }
+
+        .desktop-icon:hover span {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+            padding: 2px 5px;
+        }
+
+        @media (max-width: 600px) {
+            .taskbar {
+                height: 50px;
+                padding: 0 5px;
+            }
+
+            .start-btn {
+                padding: 5px 10px;
+                font-size: 12px;
+            }
+
+            .chat-btn {
+                padding: 5px 8px;
+            }
+
+            .chat-btn img {
+                width: 16px;
+                height: 16px;
+            }
+
+            .chat-btn span {
+                font-size: 12px;
+            }
+
+            .start-menu {
+                bottom: 50px;
+                width: 200px;
+            }
+
+            .start-menu li {
+                font-size: 12px;
+            }
+
+            .start-menu li img {
+                width: 16px;
+                height: 16px;
+            }
+
+            .taskbar-right {
+                max-width: 50%;
+            }
+
+            .date, .clock {
+                font-size: 10px;
+            }
+
+            .window {
+                width: 100%;
+                max-width: 100%;
+                height: auto;
+                top: 10%;
+                transform: translateX(-50%);
+            }
+
+            .desktop-icon img {
+                width: 32px;
+                height: 32px;
+            }
+
+            .desktop-icon span {
+                font-size: 10px;
+            }
+
+            .desktop-icon.remote-access {
+                left: 70px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Fundo 3D -->
+    <div id="vanta-bg"></div>
+
+    <!-- Ícone "Internet" na área de trabalho -->
+    <div class="desktop-icon new-tab" onclick="openNewTab()">
+        <img src="https://img.icons8.com/ios-filled/50/ffffff/internet.png" alt="Browser Icon">
+        <span>Internet</span>
+    </div>
+
+    <!-- Ícone "Acesso Remoto" na área de trabalho -->
+    <div class="desktop-icon remote-access" onclick="downloadAnyDesk()">
+        <img src="https://img.icons8.com/ios-filled/50/ffffff/remote-desktop.png" alt="Remote Access Icon">
+        <span>Acesso Remoto</span>
+    </div>
+
+    <!-- Barra de Tarefas -->
+    <div class="taskbar">
+        <button class="start-btn" onclick="toggleStartMenu()">Iniciar</button>
+        <button class="chat-btn" onclick="startChat()">
+            <img src="https://img.icons8.com/ios-filled/20/ffffff/chat.png" alt="Chat Icon">
+            <span>Iniciar Suporte</span>
+        </button>
+        <div class="taskbar-right">
+            <div class="date" id="date"></div>
+            <div class="clock" id="clock"></div>
+        </div>
+    </div>
+
+    <!-- Menu Iniciar -->
+    <div class="start-menu" id="startMenu">
+        <ul>
+            <li onclick="openChatWindow()">
+                <img src="https://img.icons8.com/ios-filled/20/ffffff/chat.png" alt="Chat Icon">
+                Chat de Suporte
+            </li>
+            <li onclick="openSupportWindow()">
+                <img src="https://img.icons8.com/ios-filled/20/ffffff/technical-support.png" alt="Support Icon">
+                Suporte Remoto
+            </li>
+            <li onclick="openFaqWindow()">
+                <img src="https://img.icons8.com/ios-filled/20/ffffff/faq.png" alt="FAQ Icon">
+                Perguntas Frequentes
+            </li>
+            <li onclick="openContactWindow()">
+                <img src="https://img.icons8.com/ios-filled/20/ffffff/phone.png" alt="Phone Icon">
+                Contato Telefônico
+            </li>
+        </ul>
+    </div>
+
+    <!-- Janela de Chat de Suporte -->
+    <div class="window" id="chatWindow">
+        <div class="window-titlebar" onmousedown="startDragging(event, 'chatWindow')">
+            <span class="window-title">Chat de Suporte</span>
+            <div class="window-controls">
+                <button onclick="closeWindow('chatWindow')">✖</button>
             </div>
         </div>
-    </nav>
-    <!-- End of page navibation -->
+        <div class="window-content">
+            <h2>Chat de Suporte Online</h2>
+            <p>Converse diretamente com nossa equipe de suporte em tempo real. Resolva dúvidas técnicas ou receba orientações imediatas para problemas simples no seu computador.</p>
+            <button onclick="startChat()">Iniciar Chat Agora</button>
+        </div>
+    </div>
 
-    <!-- Page Header -->
-    <header class="header" id="home">
-        <div class="container">
-            <div class="infos">
-                <h6 class="subtitle">Olá, eu sou</h6>
-                <h6 class="title">HuGoDesk</h6>
-                <p>Para iniciar o atendimento, clique no balão azul</p>
-
-                <div class="buttons pt-3">
-				<!--  Botão para verificar no futuro
-				
-                    <a target="_blank"
-                        href="https://wa.me/5531984681716?text=Ol%C3%A1%2C+peguei+seu+contato+no+HuGoDesk+e+preciso+falar+com+voce%21"
-                        class="btn btn-primary rounded">Atedimento remoto para qualquer localidade !</a>
-					fim do codigo-->	
-				
-                    <a target="_blank" href="https://anydesk.com/pt/downloads/windows?dv=win_exe" class="btn btn-dark rounded"><i
-                            class="ti-control-play"></i> Baixe aqui o aplicativo para acesso Remoto</a>
-                </div>
-
-                <div class="socials mt-4">
-                    <a class="social-item" href="https://hugodesk.github.io/"><i class="ti-world"></i></a>
-                    <a class="social-item" href="https://hugodesk.github.io/"><i class="ti-youtube"></i></a>
-                    <a class="social-item"
-                        href="https://wa.me/5531984681716?text=Ol%C3%A1%2C+peguei+seu+contato+no+HuGoDesk+e+preciso+falar+com+voce%21"><i
-                            class="ti-mobile"></i></a>
-                    <a class="social-item" href="mailto:hferreira816@gmail.com"><i class="ti-email"></i></a>
-                </div>
-            </div>
-            <div class="img-holder">
-                <img src="assets/imgs/eu.png" alt="">
+    <!-- Janela de Suporte Remoto -->
+    <div class="window" id="supportWindow">
+        <div class="window-titlebar" onmousedown="startDragging(event, 'supportWindow')">
+            <span class="window-title">Suporte Remoto</span>
+            <div class="window-controls">
+                <button onclick="closeWindow('supportWindow')">✖</button>
             </div>
         </div>
+        <div class="window-content">
+            <h2>Suporte Remoto</h2>
+            <p>Permita que nossos técnicos acessem seu computador remotamente para diagnosticar e corrigir problemas complexos. Baixe o AnyDesk e forneça o código ao atendente.</p>
+            <button onclick="downloadAnyDesk()">Baixar AnyDesk</button>
+        </div>
+    </div>
 
-        <!-- Header-widget -->
-		
-		
-		
-		<div class="widget">
-			<div class="widget-item">
-				<h2 id="relogio"></h2>
-				<p>Hora Atual</p>
-			</div>
-		</div>
+    <!-- Janela de Perguntas Frequentes -->
+    <div class="window" id="faqWindow">
+        <div class="window-titlebar" onmousedown="startDragging(event, 'faqWindow')">
+            <span class="window-title">Perguntas Frequentes</span>
+            <div class="window-controls">
+                <button onclick="closeWindow('faqWindow')">✖</button>
+            </div>
+        </div>
+        <div class="window-content">
+            <h2>Perguntas Frequentes</h2>
+            <p>Encontre respostas rápidas para os problemas mais comuns, como configuração de internet, atualizações de software ou solução de erros frequentes no sistema.</p>
+            <button onclick="alert('Em breve: Lista completa de FAQs!')">Ver FAQs</button>
+        </div>
+    </div>
 
-		<script>
-			function atualizarHora() {
-				const agora = new Date();
-				const horas = agora.getHours().toString().padStart(2, '0');
-				const minutos = agora.getMinutes().toString().padStart(2, '0');
-				const segundos = agora.getSeconds().toString().padStart(2, '0');
-				document.getElementById('relogio').innerText = `${horas}:${minutos}:${segundos}`;
-			}
+    <!-- Janela de Contato Telefônico -->
+    <div class="window" id="contactWindow">
+        <div class="window-titlebar" onmousedown="startDragging(event, 'contactWindow')">
+            <span class="window-title">Contato Telefônico</span>
+            <div class="window-controls">
+                <button onclick="closeWindow('contactWindow')">✖</button>
+            </div>
+        </div>
+        <div class="window-content">
+            <h2>Contato Telefônico</h2>
+            <p>Entre em contato com nossa central de atendimento para suporte personalizado. Ligue para (11) 99999-9999 e fale com um de nossos especialistas.</p>
+            <button onclick="alert('Ligue para: (11) 99999-9999')">Copiar Número</button>
+        </div>
+    </div>
 
-			setInterval(atualizarHora, 1000); // Atualiza a cada segundo
-			atualizarHora(); // Chama a função imediatamente ao carregar
-		</script>
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@0.5.24/dist/vanta.net.min.js"></script>
+    <script src="https://unpkg.com/blip-chat-widget" type="text/javascript"></script>
+    <script>
+        // Fundo 3D com tema tecnológico
+        VANTA.NET({
+            el: "#vanta-bg",
+            mouseControls: true,
+            touchControls: true,
+            gyroControls: false,
+            minHeight: 200.00,
+            minWidth: 200.00,
+            scale: 1.00,
+            scaleMobile: 1.00,
+            color: 0x0055d4,
+            backgroundColor: 0x1a1a1a,
+            points: 10.00,
+            maxDistance: 20.00,
+            spacing: 15.00
+        });
 
-		
-		
-    </header>
-   
+        // Atualizar data e relógio
+        function updateDateTime() {
+            const dateElement = document.getElementById('date');
+            const clockElement = document.getElementById('clock');
+            const now = new Date();
+            dateElement.textContent = now.toLocaleDateString('pt-BR');
+            clockElement.textContent = now.toLocaleTimeString('pt-BR');
+        }
+        setInterval(updateDateTime, 1000);
+        updateDateTime();
+
+        // Alternar Menu Iniciar
+        function toggleStartMenu() {
+            const menu = document.getElementById('startMenu');
+            menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+        }
+
+        // Abrir Janelas Específicas
+        function openChatWindow() {
+            const window = document.getElementById('chatWindow');
+            window.style.display = 'block';
+            window.style.left = (window.parentElement.clientWidth / 2 - window.offsetWidth / 2) + 'px';
+            window.style.top = '20%';
+            window.style.transform = 'none';
+            toggleStartMenu();
+        }
+
+        function openSupportWindow() {
+            const window = document.getElementById('supportWindow');
+            window.style.display = 'block';
+            window.style.left = (window.parentElement.clientWidth / 2 - window.offsetWidth / 2) + 'px';
+            window.style.top = '20%';
+            window.style.transform = 'none';
+            toggleStartMenu();
+        }
+
+        function openFaqWindow() {
+            const window = document.getElementById('faqWindow');
+            window.style.display = 'block';
+            window.style.left = (window.parentElement.clientWidth / 2 - window.offsetWidth / 2) + 'px';
+            window.style.top = '20%';
+            window.style.transform = 'none';
+            toggleStartMenu();
+        }
+
+        function openContactWindow() {
+            const window = document.getElementById('contactWindow');
+            window.style.display = 'block';
+            window.style.left = (window.parentElement.clientWidth / 2 - window.offsetWidth / 2) + 'px';
+            window.style.top = '20%';
+            window.style.transform = 'none';
+            toggleStartMenu();
+        }
+
+        // Fechar Janela
+        function closeWindow(windowId) {
+            const window = document.getElementById(windowId);
+            window.style.display = 'none';
+        }
+
+        // Abrir nova aba no navegador
+        function openNewTab() {
+            window.open('', '_blank');
+        }
+
+        // Abrir link do AnyDesk em nova aba
+        function downloadAnyDesk() {
+            window.open('https://anydesk.com/pt/downloads/thank-you?dv=win_exe', '_blank');
+        }
+
+        // Iniciar Blip Chat
+        let blipChatInstance = null;
+        function startChat() {
+            if (!blipChatInstance) {
+                blipChatInstance = new BlipChat()
+                    .withAppKey('aGlsYXJpbzM6NDRiOTUwNmQtMTg0ZS00NDUyLWI0NTMtYmUwOGEwMTFlMTJl')
+                    .withButton({"color":"#2a5192","icon":""})
+                    .withCustomCommonUrl('https://hugo_hilario88-4ebe2.chat.blip.ai/');
+                blipChatInstance.build();
+            }
+            blipChatInstance.show();
+        }
+
+        // Fechar menu ao clicar fora
+        document.addEventListener('click', (e) => {
+            const menu = document.getElementById('startMenu');
+            const startBtn = document.querySelector('.start-btn');
+            if (!menu.contains(e.target) && !startBtn.contains(e.target)) {
+                menu.style.display = 'none';
+            }
+        });
+
+        // Funcionalidade de arrastar janelas
+        function startDragging(e, windowId) {
+            const window = document.getElementById(windowId);
+            let isDragging = false;
+            let initialX = e.clientX;
+            let initialY = e.clientY;
+            let currentX = parseInt(window.style.left || (window.parentElement.clientWidth / 2 - window.offsetWidth / 2));
+            let currentY = parseInt(window.style.top || (window.parentElement.clientHeight * 0.2));
+
+            isDragging = true;
+
+            document.onmousemove = function(e) {
+                if (isDragging) {
+                    e.preventDefault();
+                    let deltaX = e.clientX - initialX;
+                    let deltaY = e.clientY - initialY;
+                    currentX += deltaX;
+                    currentY += deltaY;
+
+                    // Limita o arrastar dentro da área visível
+                    currentX = Math.max(0, Math.min(currentX, window.parentElement.clientWidth - window.offsetWidth));
+                    currentY = Math.max(0, Math.min(currentY, window.parentElement.clientHeight - window.offsetHeight - 40)); // 40 é a altura da taskbar
+
+                    window.style.left = currentX + 'px';
+                    window.style.top = currentY + 'px';
+                    window.style.transform = 'none';
+
+                    initialX = e.clientX;
+                    initialY = e.clientY;
+                }
+            };
+
+            document.onmouseup = function() {
+                isDragging = false;
+                document.onmousemove = null;
+                document.onmouseup = null;
+            };
+        }
+    </script>
 </body>
-
 </html>
