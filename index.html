@@ -216,7 +216,6 @@
             background: #0078ff;
         }
 
-        /* Estilo dos ícones na área de trabalho */
         .desktop-icon {
             position: absolute;
             top: 10px;
@@ -439,7 +438,7 @@
     <script src="https://cdn.jsdelivr.net/npm/vanta@0.5.24/dist/vanta.net.min.js"></script>
     <script src="https://unpkg.com/blip-chat-widget" type="text/javascript"></script>
     <script>
-        // Fundo 3D com tema tecnológico
+        // Fundo 3D com linhas azuis
         VANTA.NET({
             el: "#vanta-bg",
             mouseControls: true,
@@ -567,9 +566,8 @@
                     currentX += deltaX;
                     currentY += deltaY;
 
-                    // Limita o arrastar dentro da área visível
                     currentX = Math.max(0, Math.min(currentX, window.parentElement.clientWidth - window.offsetWidth));
-                    currentY = Math.max(0, Math.min(currentY, window.parentElement.clientHeight - window.offsetHeight - 40)); // 40 é a altura da taskbar
+                    currentY = Math.max(0, Math.min(currentY, window.parentElement.clientHeight - window.offsetHeight - 40));
 
                     window.style.left = currentX + 'px';
                     window.style.top = currentY + 'px';
@@ -586,6 +584,14 @@
                 document.onmouseup = null;
             };
         }
+
+        // Abrir menu automaticamente na versão mobile ao carregar a página
+        window.onload = function() {
+            if (window.innerWidth <= 600) {
+                const menu = document.getElementById('startMenu');
+                menu.style.display = 'block';
+            }
+        };
     </script>
 </body>
 </html>
