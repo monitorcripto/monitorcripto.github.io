@@ -62,6 +62,7 @@
             align-items: center;
             margin-left: 10px;
             transition: background 0.2s ease;
+            position: relative;
         }
 
         .chat-btn img {
@@ -78,6 +79,25 @@
 
         .chat-btn:hover {
             background: rgba(0, 120, 255, 0.9);
+        }
+
+        .chat-btn::after {
+            content: "Precisa de ajuda?";
+            position: absolute;
+            bottom: 45px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 85, 212, 0.9);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            white-space: nowrap;
+            display: none;
+        }
+
+        .chat-btn:hover::after {
+            display: block;
         }
 
         .taskbar-right {
@@ -145,14 +165,14 @@
             position: absolute;
             width: 500px;
             max-width: 90%;
-            height: auto;
-            min-height: 300px;
+            height: 400px;
+            max-height: calc(100vh - 80px);
             background: #fff;
             border: 1px solid #999;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-            top: 20%;
+            top: 50%;
             left: 50%;
-            transform: translateX(-50%);
+            transform: translate(-50%, -50%);
             display: none;
             box-sizing: border-box;
             z-index: 1000;
@@ -189,6 +209,9 @@
 
         .window-content {
             padding: 15px;
+            height: calc(100% - 30px);
+            display: flex;
+            flex-direction: column;
         }
 
         .window-content h2 {
@@ -197,23 +220,10 @@
             font-size: 18px;
         }
 
-        .window-content p {
-            line-height: 1.5;
-            font-size: 14px;
-        }
-
-        .window-content button {
-            background: #0055d4;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            cursor: pointer;
-            border-radius: 3px;
-            font-size: 14px;
-        }
-
-        .window-content button:hover {
-            background: #0078ff;
+        #blip-chat-container {
+            flex: 1;
+            width: 100%;
+            height: 100%;
         }
 
         .desktop-icon {
@@ -259,13 +269,9 @@
                 padding: 0 5px;
             }
 
-            .start-btn {
+            .start-btn, .chat-btn {
                 padding: 5px 10px;
                 font-size: 12px;
-            }
-
-            .chat-btn {
-                padding: 5px 8px;
             }
 
             .chat-btn img {
@@ -300,11 +306,12 @@
             }
 
             .window {
-                width: 100%;
-                max-width: 100%;
-                height: auto;
-                top: 10%;
-                transform: translateX(-50%);
+                width: 90%;
+                height: 80%;
+                max-height: calc(100vh - 100px);
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
             }
 
             .desktop-icon img {
@@ -341,7 +348,7 @@
     <!-- Barra de Tarefas -->
     <div class="taskbar">
         <button class="start-btn" onclick="toggleStartMenu()">Iniciar</button>
-        <button class="chat-btn" onclick="startChat()">
+        <button class="chat-btn" onclick="openChatWindow()">
             <img src="https://img.icons8.com/ios-filled/20/ffffff/chat.png" alt="Chat Icon">
             <span>Iniciar Suporte</span>
         </button>
@@ -373,7 +380,7 @@
         </ul>
     </div>
 
-    <!-- Janela de Chat de Suporte -->
+    <!-- Janela de Chat de Suporte com Blip Chat -->
     <div class="window" id="chatWindow">
         <div class="window-titlebar" onmousedown="startDragging(event, 'chatWindow')">
             <span class="window-title">Chat de Suporte</span>
@@ -382,9 +389,8 @@
             </div>
         </div>
         <div class="window-content">
-            <h2>Chat de Suporte Online</h2>
-            <p>Converse diretamente com nossa equipe de suporte em tempo real. Resolva dúvidas técnicas ou receba orientações imediatas para problemas simples no seu computador.</p>
-            <button onclick="startChat()">Iniciar Chat Agora</button>
+            <h2>Suporte Técnico</h2>
+            <div id="blip-chat-container"></div>
         </div>
     </div>
 
@@ -473,39 +479,50 @@
         }
 
         // Abrir Janelas Específicas
+        let blipChatInstance = null;
         function openChatWindow() {
             const window = document.getElementById('chatWindow');
             window.style.display = 'block';
-            window.style.left = (window.parentElement.clientWidth / 2 - window.offsetWidth / 2) + 'px';
-            window.style.top = '20%';
-            window.style.transform = 'none';
+            window.style.left = '50%';
+            window.style.top = '50%';
+            window.style.transform = 'translate(-50%, -50%)';
             toggleStartMenu();
+
+            if (!blipChatInstance) {
+                blipChatInstance = new BlipChat()
+                    .withAppKey('aGlsYXJpbzM6NDRiOTUwNmQtMTg0ZS00NDUyLWI0NTMtYmUwOGEwMTFlMTJl')
+                    .withButton({"color":"#2a5192","icon":""})
+                    .withCustomCommonUrl('https://hugo_hilario88-4ebe2.chat.blip.ai/')
+                    .withTarget('blip-chat-container')
+                    .withCustomStyle('body { background-color: #f4f4f4; } .chat-header { background: linear-gradient(to right, #0055d4, #0078ff); color: white; }')
+                    .build();
+            }
         }
 
         function openSupportWindow() {
             const window = document.getElementById('supportWindow');
             window.style.display = 'block';
-            window.style.left = (window.parentElement.clientWidth / 2 - window.offsetWidth / 2) + 'px';
-            window.style.top = '20%';
-            window.style.transform = 'none';
+            window.style.left = '50%';
+            window.style.top = '50%';
+            window.style.transform = 'translate(-50%, -50%)';
             toggleStartMenu();
         }
 
         function openFaqWindow() {
             const window = document.getElementById('faqWindow');
             window.style.display = 'block';
-            window.style.left = (window.parentElement.clientWidth / 2 - window.offsetWidth / 2) + 'px';
-            window.style.top = '20%';
-            window.style.transform = 'none';
+            window.style.left = '50%';
+            window.style.top = '50%';
+            window.style.transform = 'translate(-50%, -50%)';
             toggleStartMenu();
         }
 
         function openContactWindow() {
             const window = document.getElementById('contactWindow');
             window.style.display = 'block';
-            window.style.left = (window.parentElement.clientWidth / 2 - window.offsetWidth / 2) + 'px';
-            window.style.top = '20%';
-            window.style.transform = 'none';
+            window.style.left = '50%';
+            window.style.top = '50%';
+            window.style.transform = 'translate(-50%, -50%)';
             toggleStartMenu();
         }
 
@@ -513,6 +530,9 @@
         function closeWindow(windowId) {
             const window = document.getElementById(windowId);
             window.style.display = 'none';
+            if (windowId === 'chatWindow' && blipChatInstance) {
+                blipChatInstance.hide();
+            }
         }
 
         // Abrir nova aba no navegador
@@ -523,19 +543,6 @@
         // Abrir link do AnyDesk em nova aba
         function downloadAnyDesk() {
             window.open('https://anydesk.com/pt/downloads/thank-you?dv=win_exe', '_blank');
-        }
-
-        // Iniciar Blip Chat
-        let blipChatInstance = null;
-        function startChat() {
-            if (!blipChatInstance) {
-                blipChatInstance = new BlipChat()
-                    .withAppKey('aGlsYXJpbzM6NDRiOTUwNmQtMTg0ZS00NDUyLWI0NTMtYmUwOGEwMTFlMTJl')
-                    .withButton({"color":"#2a5192","icon":""})
-                    .withCustomCommonUrl('https://hugo_hilario88-4ebe2.chat.blip.ai/');
-                blipChatInstance.build();
-            }
-            blipChatInstance.show();
         }
 
         // Fechar menu ao clicar fora
@@ -553,8 +560,8 @@
             let isDragging = false;
             let initialX = e.clientX;
             let initialY = e.clientY;
-            let currentX = parseInt(window.style.left || (window.parentElement.clientWidth / 2 - window.offsetWidth / 2));
-            let currentY = parseInt(window.style.top || (window.parentElement.clientHeight * 0.2));
+            let currentX = parseInt(window.style.left || (window.parentElement.clientWidth / 2));
+            let currentY = parseInt(window.style.top || (window.parentElement.clientHeight / 2));
 
             isDragging = true;
 
