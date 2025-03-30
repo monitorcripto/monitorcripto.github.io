@@ -82,7 +82,7 @@
         }
 
         .chat-btn::after {
-            content: "Precisa de ajuda?";
+            content: "Fale com um atendente";
             position: absolute;
             bottom: 45px;
             left: 50%;
@@ -97,6 +97,54 @@
         }
 
         .chat-btn:hover::after {
+            display: block;
+        }
+
+        .ai-btn {
+            background: rgba(0, 85, 212, 0.8);
+            padding: 5px 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            margin-left: 10px;
+            transition: background 0.2s ease;
+            position: relative;
+        }
+
+        .ai-btn img {
+            width: 20px;
+            height: 20px;
+            margin-right: 5px;
+        }
+
+        .ai-btn span {
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .ai-btn:hover {
+            background: rgba(0, 120, 255, 0.9);
+        }
+
+        .ai-btn::after {
+            content: "Ajuda por IA";
+            position: absolute;
+            bottom: 45px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 85, 212, 0.9);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            white-space: nowrap;
+            display: none;
+        }
+
+        .ai-btn:hover::after {
             display: block;
         }
 
@@ -209,7 +257,7 @@
         }
 
         .window-content {
-            padding: 0; /* Removido padding para o Blip Chat preencher tudo */
+            padding: 0;
             height: calc(100% - 30px);
             display: flex;
             flex-direction: column;
@@ -219,6 +267,86 @@
             width: 100%;
             height: 100%;
             border: none;
+        }
+
+        .window-content h2 {
+            margin: 0 0 10px 0;
+            color: #003087;
+            font-size: 18px;
+            padding: 15px 15px 0;
+        }
+
+        .window-content p {
+            padding: 0 15px;
+        }
+
+        .window-content button {
+            margin: 10px 15px;
+        }
+
+        #ai-chat-container {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        #ai-chat-messages {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 10px;
+            background: #f4f4f4;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .message {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            max-width: 80%;
+        }
+
+        .user-message {
+            background: #0078ff;
+            color: white;
+            align-self: flex-end;
+            margin-left: auto;
+        }
+
+        .ai-message {
+            background: #e0e0e0;
+            color: black;
+            align-self: flex-start;
+        }
+
+        #ai-chat-input {
+            display: flex;
+            gap: 10px;
+        }
+
+        #ai-chat-input input {
+            flex-grow: 1;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        #ai-chat-input button {
+            padding: 8px 15px;
+            background: #0078ff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        #ai-chat-input button:hover {
+            background: #0055d4;
         }
 
         .desktop-icon {
@@ -264,17 +392,17 @@
                 padding: 0 5px;
             }
 
-            .start-btn, .chat-btn {
-                padding: 5px 10px;
+            .start-btn, .chat-btn, .ai-btn {
+                padding: 5px 8px;
                 font-size: 12px;
             }
 
-            .chat-btn img {
+            .chat-btn img, .ai-btn img {
                 width: 16px;
                 height: 16px;
             }
 
-            .chat-btn span {
+            .chat-btn span, .ai-btn span {
                 font-size: 12px;
             }
 
@@ -304,6 +432,15 @@
                 width: 90%;
                 height: 85%;
                 max-height: calc(100vh - 60px);
+            }
+
+            #ai-chat-input input {
+                font-size: 12px;
+            }
+
+            #ai-chat-input button {
+                font-size: 12px;
+                padding: 6px 10px;
             }
 
             .desktop-icon img {
@@ -339,10 +476,14 @@
 
     <!-- Barra de Tarefas -->
     <div class="taskbar">
-        <button class="start-btn" onclick="toggleStartMenu()">Iniciar</button>
+        <button class="start-btn" onclick="toggleStartMenu()">Informações do Site</button>
         <button class="chat-btn" onclick="toggleBlipChat()">
             <img src="https://img.icons8.com/ios-filled/20/ffffff/chat.png" alt="Chat Icon">
-            <span>Iniciar Suporte</span>
+            <span>Suporte Humano</span>
+        </button>
+        <button class="ai-btn" onclick="openAIWindow()">
+            <img src="https://img.icons8.com/ios-filled/20/ffffff/artificial-intelligence.png" alt="AI Icon">
+            <span>Suporte IA</span>
         </button>
         <div class="taskbar-right">
             <div class="date" id="date"></div>
@@ -355,7 +496,11 @@
         <ul>
             <li onclick="toggleBlipChat()">
                 <img src="https://img.icons8.com/ios-filled/20/ffffff/chat.png" alt="Chat Icon">
-                Chat de Suporte
+                Suporte Humano
+            </li>
+            <li onclick="openAIWindow()">
+                <img src="https://img.icons8.com/ios-filled/20/ffffff/artificial-intelligence.png" alt="AI Icon">
+                Suporte IA
             </li>
             <li onclick="openSupportWindow()">
                 <img src="https://img.icons8.com/ios-filled/20/ffffff/technical-support.png" alt="Support Icon">
@@ -375,12 +520,31 @@
     <!-- Janela do Blip Chat -->
     <div class="window" id="blipChatWindow">
         <div class="window-titlebar" onmousedown="startDragging(event, 'blipChatWindow')">
-            <span class="window-title">Chat de Suporte</span>
+            <span class="window-title">Suporte Humano</span>
             <div class="window-controls">
                 <button class="close-btn" onclick="closeBlipChat()">✖</button>
             </div>
         </div>
         <div class="window-content" id="blip-chat-content"></div>
+    </div>
+
+    <!-- Janela de Suporte IA (Google Gemini) -->
+    <div class="window" id="aiWindow">
+        <div class="window-titlebar" onmousedown="startDragging(event, 'aiWindow')">
+            <span class="window-title">Suporte IA - Google Gemini</span>
+            <div class="window-controls">
+                <button class="close-btn" onclick="closeWindow('aiWindow')">✖</button>
+            </div>
+        </div>
+        <div class="window-content">
+            <div id="ai-chat-container">
+                <div id="ai-chat-messages"></div>
+                <div id="ai-chat-input">
+                    <input type="text" id="ai-message-input" placeholder="Digite sua mensagem...">
+                    <button onclick="sendAIMessage()">Enviar</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Janela de Suporte Remoto -->
@@ -490,7 +654,7 @@
                     blipChatInstance.show();
                 }
             }
-            toggleStartMenu(); // Fecha o menu após abrir o chat, se estiver aberto
+            toggleStartMenu();
         }
 
         // Fechar Blip Chat
@@ -501,6 +665,81 @@
                 blipChatInstance.hide();
             }
         }
+
+        // Abrir Janela de Suporte IA
+        function openAIWindow() {
+            const aiWindow = document.getElementById('aiWindow');
+            aiWindow.style.display = 'block';
+            aiWindow.style.left = '50%';
+            aiWindow.style.top = '50%';
+            aiWindow.style.transform = 'translate(-50%, -50%)';
+            toggleStartMenu();
+        }
+
+        // Função para enviar mensagem ao Gemini
+        async function sendAIMessage() {
+            const input = document.getElementById('ai-message-input');
+            const message = input.value.trim();
+            if (!message) return;
+
+            const messagesDiv = document.getElementById('ai-chat-messages');
+
+            // Adicionar mensagem do usuário
+            const userMessage = document.createElement('div');
+            userMessage.className = 'message user-message';
+            userMessage.textContent = message;
+            messagesDiv.appendChild(userMessage);
+            input.value = '';
+
+            // Rolar para o final
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+
+            try {
+                const response = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=AIzaSyAD4fk2walyICnbxFrwS_DQzLmev5_Z4i8', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        contents: [{
+                            parts: [{
+                                text: message
+                            }]
+                        }]
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Erro na resposta da API: ' + response.statusText);
+                }
+
+                const data = await response.json();
+                const aiResponse = data.candidates[0].content.parts[0].text;
+
+                // Adicionar resposta da IA
+                const aiMessage = document.createElement('div');
+                aiMessage.className = 'message ai-message';
+                aiMessage.textContent = aiResponse;
+                messagesDiv.appendChild(aiMessage);
+
+                // Rolar para o final
+                messagesDiv.scrollTop = messagesDiv.scrollHeight;
+            } catch (error) {
+                console.error('Erro ao chamar a API do Gemini:', error);
+                const errorMessage = document.createElement('div');
+                errorMessage.className = 'message ai-message';
+                errorMessage.textContent = 'Desculpe, não consegui conectar ao Gemini. Erro: ' + error.message;
+                messagesDiv.appendChild(errorMessage);
+                messagesDiv.scrollTop = messagesDiv.scrollHeight;
+            }
+        }
+
+        // Enviar mensagem ao pressionar Enter
+        document.getElementById('ai-message-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendAIMessage();
+            }
+        });
 
         // Abrir Janelas Específicas
         function openSupportWindow() {
