@@ -237,28 +237,40 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
         }
 
-        #blip-chat-container iframe {
-            width: 100%;
-            height: calc(100% - 30px); /* Ajustado para o espaço do botão de fechar */
-            border: none;
+        #blip-chat-titlebar {
+            background: linear-gradient(to right, #0055d4, #0078ff);
+            color: white;
+            padding: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 30px;
+            box-sizing: border-box;
+        }
+
+        #blip-chat-title {
+            font-weight: bold;
+            font-size: 14px;
         }
 
         .blip-close-btn {
-            position: absolute;
-            top: 5px;
-            right: 5px;
             background: #ff0000;
             color: white;
             border: none;
             font-size: 16px;
-            padding: 5px 10px;
+            padding: 0 10px;
             cursor: pointer;
-            border-radius: 3px;
             z-index: 2100;
         }
 
         .blip-close-btn:hover {
             background: #cc0000;
+        }
+
+        #blip-chat-container iframe {
+            width: 100%;
+            height: calc(100% - 30px); /* Espaço para a barra de título */
+            border: none;
         }
 
         .desktop-icon {
@@ -420,7 +432,10 @@
 
     <!-- Contêiner para o Blip Chat -->
     <div id="blip-chat-container">
-        <button class="blip-close-btn" onclick="closeBlipChat()">✖</button>
+        <div id="blip-chat-titlebar">
+            <span id="blip-chat-title">Chat de Suporte</span>
+            <button class="blip-close-btn" onclick="closeBlipChat()">✖</button>
+        </div>
     </div>
 
     <!-- Janela de Suporte Remoto -->
