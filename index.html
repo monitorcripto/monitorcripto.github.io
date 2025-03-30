@@ -176,6 +176,7 @@
             display: none;
             box-sizing: border-box;
             z-index: 1000;
+            overflow: hidden; /* Impede que o conteúdo transborde */
         }
 
         .window-titlebar {
@@ -215,7 +216,7 @@
         }
 
         .window-content h2 {
-            margin-top: 0;
+            margin: 0 0 10px 0;
             color: #003087;
             font-size: 18px;
         }
@@ -224,6 +225,14 @@
             flex: 1;
             width: 100%;
             height: 100%;
+            overflow: hidden; /* Garante que o iframe fique contido */
+            position: relative;
+        }
+
+        #blip-chat-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
         }
 
         .desktop-icon {
@@ -494,8 +503,10 @@
                     .withButton({"color":"#2a5192","icon":""})
                     .withCustomCommonUrl('https://hugo_hilario88-4ebe2.chat.blip.ai/')
                     .withTarget('blip-chat-container')
-                    .withCustomStyle('body { background-color: #f4f4f4; } .chat-header { background: linear-gradient(to right, #0055d4, #0078ff); color: white; }')
+                    .withCustomStyle('body { background-color: #f4f4f4; margin: 0; padding: 0; } .chat-header { background: linear-gradient(to right, #0055d4, #0078ff); color: white; } .blip-chat-container { width: 100%; height: 100%; }')
                     .build();
+            } else {
+                blipChatInstance.show();
             }
         }
 
