@@ -165,7 +165,7 @@
             position: absolute;
             width: 500px;
             max-width: 90%;
-            height: 600px; /* Altura aumentada */
+            height: 400px;
             max-height: calc(100vh - 80px);
             background: #fff;
             border: 1px solid #999;
@@ -210,7 +210,7 @@
 
         .window-content {
             padding: 15px;
-            height: calc(100% - 30px); /* Ajustado para a barra de título */
+            height: calc(100% - 30px);
             display: flex;
             flex-direction: column;
         }
@@ -219,20 +219,6 @@
             margin: 0 0 10px 0;
             color: #003087;
             font-size: 18px;
-        }
-
-        #blip-chat-container {
-            flex: 1;
-            width: 100%;
-            height: calc(100% - 38px); /* Altura limitada até abaixo do h2 */
-            overflow: hidden;
-            position: relative;
-        }
-
-        #blip-chat-container iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
         }
 
         .desktop-icon {
@@ -316,15 +302,11 @@
 
             .window {
                 width: 90%;
-                height: 80%;
-                max-height: calc(100vh - 100px);
+                height: calc(100vh - 60px);
+                max-height: calc(100vh - 60px);
                 top: 50%;
                 left: 50%;
                 transform: translate(-50%, -50%);
-            }
-
-            #blip-chat-container {
-                height: calc(100% - 38px); /* Mantém o ajuste no mobile */
             }
 
             .desktop-icon img {
@@ -361,7 +343,7 @@
     <!-- Barra de Tarefas -->
     <div class="taskbar">
         <button class="start-btn" onclick="toggleStartMenu()">Iniciar</button>
-        <button class="chat-btn" onclick="openChatWindow()">
+        <button class="chat-btn" onclick="toggleBlipChat()">
             <img src="https://img.icons8.com/ios-filled/20/ffffff/chat.png" alt="Chat Icon">
             <span>Iniciar Suporte</span>
         </button>
@@ -374,7 +356,7 @@
     <!-- Menu Iniciar -->
     <div class="start-menu" id="startMenu">
         <ul>
-            <li onclick="openChatWindow()">
+            <li onclick="toggleBlipChat()">
                 <img src="https://img.icons8.com/ios-filled/20/ffffff/chat.png" alt="Chat Icon">
                 Chat de Suporte
             </li>
@@ -391,20 +373,6 @@
                 Contato Telefônico
             </li>
         </ul>
-    </div>
-
-    <!-- Janela de Chat de Suporte com Blip Chat -->
-    <div class="window" id="chatWindow">
-        <div class="window-titlebar" onmousedown="startDragging(event, 'chatWindow')">
-            <span class="window-title">Chat de Suporte</span>
-            <div class="window-controls">
-                <button onclick="closeWindow('chatWindow')">✖</button>
-            </div>
-        </div>
-        <div class="window-content">
-            <h2>Suporte Técnico</h2>
-            <div id="blip-chat-container"></div>
-        </div>
     </div>
 
     <!-- Janela de Suporte Remoto -->
@@ -491,29 +459,23 @@
             menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
         }
 
-        // Abrir Janelas Específicas
+        // Inicializar Blip Chat
         let blipChatInstance = null;
-        function openChatWindow() {
-            const window = document.getElementById('chatWindow');
-            window.style.display = 'block';
-            window.style.left = '50%';
-            window.style.top = '50%';
-            window.style.transform = 'translate(-50%, -50%)';
-            toggleStartMenu();
-
+        function toggleBlipChat() {
             if (!blipChatInstance) {
                 blipChatInstance = new BlipChat()
                     .withAppKey('aGlsYXJpbzM6NDRiOTUwNmQtMTg0ZS00NDUyLWI0NTMtYmUwOGEwMTFlMTJl')
                     .withButton({"color":"#2a5192","icon":""})
                     .withCustomCommonUrl('https://hugo_hilario88-4ebe2.chat.blip.ai/')
-                    .withTarget('blip-chat-container')
-                    .withCustomStyle('body { background-color: #f4f4f4; margin: 0; padding: 0; } .chat-header { background: linear-gradient(to right, #0055d4, #0078ff); color: white; } .blip-chat-container { width: 100%; height: 100%; }')
+                    .withCustomStyle('body { background-color: #f4f4f4; margin: 0; padding: 0; } .chat-header { background: linear-gradient(to right, #0055d4, #0078ff); color: white; }')
                     .build();
             } else {
-                blipChatInstance.show();
+                blipChatInstance.toogleChat(); // Alterna entre mostrar/esconder o chat
             }
+            toggleStartMenu(); // Fecha o menu após clique, se aberto
         }
 
+        // Abrir Janelas Específicas
         function openSupportWindow() {
             const window = document.getElementById('supportWindow');
             window.style.display = 'block';
@@ -545,9 +507,6 @@
         function closeWindow(windowId) {
             const window = document.getElementById(windowId);
             window.style.display = 'none';
-            if (windowId === 'chatWindow' && blipChatInstance) {
-                blipChatInstance.hide();
-            }
         }
 
         // Abrir nova aba no navegador
