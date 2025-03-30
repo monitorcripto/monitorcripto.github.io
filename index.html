@@ -163,10 +163,10 @@
 
         .window {
             position: absolute;
-            width: 500px;
-            max-width: 90%;
-            height: 400px;
-            max-height: calc(100vh - 80px);
+            width: 80%;
+            max-width: 500px;
+            height: 70%;
+            max-height: 400px;
             background: #fff;
             border: 1px solid #999;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
@@ -226,21 +226,39 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 500px;
-            max-width: 90%;
-            height: 600px;
+            width: 80%;
+            max-width: 500px;
+            height: 80%;
             max-height: calc(100vh - 80px);
             display: none;
             z-index: 2000;
             overflow: hidden;
-            background: #fff; /* Fundo branco para consistência */
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Sombra leve para destacar */
+            background: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
         }
 
         #blip-chat-container iframe {
             width: 100%;
-            height: 100%;
+            height: calc(100% - 30px); /* Ajustado para o espaço do botão de fechar */
             border: none;
+        }
+
+        .blip-close-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: #ff0000;
+            color: white;
+            border: none;
+            font-size: 16px;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 3px;
+            z-index: 2100;
+        }
+
+        .blip-close-btn:hover {
+            background: #cc0000;
         }
 
         .desktop-icon {
@@ -324,20 +342,14 @@
 
             .window {
                 width: 90%;
-                height: calc(100vh - 60px);
+                height: 85%;
                 max-height: calc(100vh - 60px);
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
             }
 
             #blip-chat-container {
                 width: 90%;
-                height: calc(100vh - 60px);
+                height: 85%;
                 max-height: calc(100vh - 60px);
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
             }
 
             .desktop-icon img {
@@ -407,7 +419,9 @@
     </div>
 
     <!-- Contêiner para o Blip Chat -->
-    <div id="blip-chat-container"></div>
+    <div id="blip-chat-container">
+        <button class="blip-close-btn" onclick="closeBlipChat()">✖</button>
+    </div>
 
     <!-- Janela de Suporte Remoto -->
     <div class="window" id="supportWindow">
@@ -498,7 +512,7 @@
         function toggleBlipChat() {
             const chatContainer = document.getElementById('blip-chat-container');
             if (!blipChatInstance) {
-                chatContainer.style.display = 'block'; // Mostra o contêiner primeiro
+                chatContainer.style.display = 'block';
                 blipChatInstance = new BlipChat()
                     .withAppKey('aGlsYXJpbzM6NDRiOTUwNmQtMTg0ZS00NDUyLWI0NTMtYmUwOGEwMTFlMTJl')
                     .withButton({"color":"#2a5192","icon":""})
@@ -506,15 +520,24 @@
                     .withTarget('blip-chat-container')
                     .withCustomStyle('body { background-color: #f4f4f4; margin: 0; padding: 0; } .chat-header { background: linear-gradient(to right, #0055d4, #0078ff); color: white; } .blip-container { width: 100%; height: 100%; }')
                     .build();
-                blipChatInstance.show(); // Força a abertura completa do chat
+                blipChatInstance.show();
             } else {
                 if (chatContainer.style.display === 'block') {
                     chatContainer.style.display = 'none';
                     blipChatInstance.hide();
                 } else {
                     chatContainer.style.display = 'block';
-                    blipChatInstance.show(); // Garante que o chat abra diretamente
+                    blipChatInstance.show();
                 }
+            }
+        }
+
+        // Fechar Blip Chat
+        function closeBlipChat() {
+            const chatContainer = document.getElementById('blip-chat-container');
+            chatContainer.style.display = 'none';
+            if (blipChatInstance) {
+                blipChatInstance.hide();
             }
         }
 
