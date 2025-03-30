@@ -221,6 +221,28 @@
             font-size: 18px;
         }
 
+        #blip-chat-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 500px;
+            max-width: 90%;
+            height: 600px;
+            max-height: calc(100vh - 80px);
+            display: none;
+            z-index: 2000;
+            overflow: hidden;
+            background: #fff; /* Fundo branco para consistência */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Sombra leve para destacar */
+        }
+
+        #blip-chat-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
         .desktop-icon {
             position: absolute;
             top: 10px;
@@ -309,6 +331,15 @@
                 transform: translate(-50%, -50%);
             }
 
+            #blip-chat-container {
+                width: 90%;
+                height: calc(100vh - 60px);
+                max-height: calc(100vh - 60px);
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+
             .desktop-icon img {
                 width: 32px;
                 height: 32px;
@@ -374,6 +405,9 @@
             </li>
         </ul>
     </div>
+
+    <!-- Contêiner para o Blip Chat -->
+    <div id="blip-chat-container"></div>
 
     <!-- Janela de Suporte Remoto -->
     <div class="window" id="supportWindow">
@@ -459,20 +493,29 @@
             menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
         }
 
-        // Inicializar Blip Chat
+        // Inicializar e controlar Blip Chat
         let blipChatInstance = null;
         function toggleBlipChat() {
+            const chatContainer = document.getElementById('blip-chat-container');
             if (!blipChatInstance) {
+                chatContainer.style.display = 'block'; // Mostra o contêiner primeiro
                 blipChatInstance = new BlipChat()
                     .withAppKey('aGlsYXJpbzM6NDRiOTUwNmQtMTg0ZS00NDUyLWI0NTMtYmUwOGEwMTFlMTJl')
                     .withButton({"color":"#2a5192","icon":""})
                     .withCustomCommonUrl('https://hugo_hilario88-4ebe2.chat.blip.ai/')
-                    .withCustomStyle('body { background-color: #f4f4f4; margin: 0; padding: 0; } .chat-header { background: linear-gradient(to right, #0055d4, #0078ff); color: white; }')
+                    .withTarget('blip-chat-container')
+                    .withCustomStyle('body { background-color: #f4f4f4; margin: 0; padding: 0; } .chat-header { background: linear-gradient(to right, #0055d4, #0078ff); color: white; } .blip-container { width: 100%; height: 100%; }')
                     .build();
+                blipChatInstance.show(); // Força a abertura completa do chat
             } else {
-                blipChatInstance.toogleChat(); // Alterna entre mostrar/esconder o chat
+                if (chatContainer.style.display === 'block') {
+                    chatContainer.style.display = 'none';
+                    blipChatInstance.hide();
+                } else {
+                    chatContainer.style.display = 'block';
+                    blipChatInstance.show(); // Garante que o chat abra diretamente
+                }
             }
-            toggleStartMenu(); // Fecha o menu após clique, se aberto
         }
 
         // Abrir Janelas Específicas
